@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>山大--语句树平台</title>
+<link rel="stylesheet" type="text/css" href="../css/my.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/search.css" />
+<script type="text/javascript" src="../js/dataTool.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/echarts.js"></script>
+<script type="text/javascript" src="../js/tool.js"></script>
+<script type="text/javascript" src="../js/Ajax.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var ele = sessionStorage.getItem("keysent");
+		if (ele === "")
+			return;
+		else {
+			Search(ele);
+			$("#sent").val(ele);
+		}
+
+	});
+</script>
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="headbox">
+				<div class="title">SDU-WH语句树交互验证分析平台</div>
+			</div>
+		</div>
+		<div id="body">
+			<div id="menu" style="top:270px">
+				<div class="menu-box">
+					<div class="box">
+						<a href="window">分析</a>
+					</div>
+					<div class="box">
+						<a href="search">查询</a>
+					</div>
+					<div class="box">
+						<a href="document">文档</a>
+					</div>
+					<div class="box">
+						<a href="">式库</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="top">
+				<div class="title-body">
+					<p class="body-title">单句分析</p>
+					<p class="title-context">↓↓在这里查询你想分析的汉语语句，并能看到详析情况</p>
+				</div>
+			</div>
+			<div class="center">
+				<div class="center-box">
+					<div class="search-box">
+						<div class="input-box">
+							<textarea id="sent" rows="22" cols="30">
+								
+							</textarea>
+						</div>
+						<div class="btn-box">
+							<button class="btn btn-primary" onclick="SearchGo()">分析查询</button>
+							<button id="delete" class="btn btn-danger">库存删除</button>
+						</div>
+					</div>
+					<div class="show-box">
+						<div class="srcsent show-inline clear">
+							<span class="show-title">分析原语句:&nbsp;&nbsp;</span> <span
+								id="mysent" class="show-result"></span>
+							<!-- <span>以下是分析结果</span> -->
+						</div>
+						<div class="leftsent">
+							<div class="show-inline clear">
+								<span class="show-title">谓核结构:&nbsp;&nbsp;</span> <span id="hed"
+									class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">句式主干:&nbsp;&nbsp;</span> <span
+									id="sonst" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">简约后:&nbsp;&nbsp;</span> <span
+									id="sonsp" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">词列:&nbsp;&nbsp;</span> <span id="sonwd"
+									class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">词性:&nbsp;&nbsp;</span> <span
+									id="sonpos" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">描述数量:&nbsp;&nbsp;</span> <span
+									id="soonum" class="show-result"></span>
+							</div>
+						</div>
+						<div class="rightsent">
+							<div class="show-inline clear">
+								<span class="show-title">&nbsp;&nbsp;</span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">并列结构:&nbsp;&nbsp;</span> <span
+									id="coost" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">简约后:&nbsp;&nbsp;</span> <span
+									id="coosp" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">词列:&nbsp;&nbsp;</span> <span id="coowd"
+									class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">词性:&nbsp;&nbsp;</span> <span
+									id="coopos" class="show-result"></span>
+							</div>
+							<div class="show-inline clear">
+								<span class="show-title">描述数量:&nbsp;&nbsp;</span> <span
+									id="coonum" class="show-result"></span>
+							</div>
+						</div>
+						<div class="srcsent show-inline clear">
+							<span class="show-title">信息提示：&nbsp;&nbsp;</span> <span
+								id="mymessage" class="show-result"></span>
+						</div>
+						<button id="save" class="btn btn-danger fubtn">数据入库</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="footer-box"></div>
+		</div>
+	</div>
+</body>
+</html>

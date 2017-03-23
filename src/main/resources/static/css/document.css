@@ -1,0 +1,105 @@
+.search-box ul,.document-btn ul {
+	margin-top: 50px;
+	list-style: none;
+}
+
+.search-box li{
+	line-height: 40px;
+}
+
+.document-btn li {
+	line-height: 60px;
+}
+
+.search-box li a,.document-btn li a{
+	text-decoration:none;
+}
+
+.active {
+	color:red;
+}
+
+.document-box {
+	float: left;
+	width: 80%;
+	margin-left: 0px; 
+	min-height:480px;
+}
+
+.document-box ul {
+}
+
+.document-box ul ol {
+	height: 40px;
+}
+
+.document-box ul ol li{
+	float: left;
+	list-style: none;
+	margin-right:100px;
+}
+
+.document-box ul ol li a{
+	text-decoration:none;
+}
+
+.document-list {
+	padding: 20px;
+	border: 1px solid #e1e1e1;
+}
+
+.document-btn {
+	padding: 20px;
+	float: right;
+	width: 20%;
+}
+
+.form-document {
+	height: 40px;
+}
+
+.read {
+	overflow-y: auto;
+	font-size:16px;
+	line-height:24px;
+}
+
+.welcome-log {
+	min-height:200px;
+}
+
+.log-font {
+	font-size:20px;
+	color:blue;
+	font-weight:bold;
+}
+
+.slogan {
+	margin-top:10px;
+}
+
+.description {
+	clear:both;
+	font-weight:bold;
+	position:relative;
+}
+
+.summary {
+	float:left;
+	width:35%;
+	margin-left:5%;
+	height:auto;
+	text-align:left;
+}
+
+p {
+	text-indent:2em;
+}
+
+.start {
+	float:left;
+	width:45%;
+	margin-left:10%;
+	height:auto;
+	text-align:left;
+}

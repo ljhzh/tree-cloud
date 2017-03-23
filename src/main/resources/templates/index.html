@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>山大--语句树平台</title>
+<link rel="stylesheet" type="text/css" href="../css/my.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/search.css" />
+<link rel="stylesheet" type="text/css" href="../css/document.css" />
+<script type="text/javascript" src="../js/dataTool.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/echarts.js"></script>
+<script type="text/javascript" src="../js/tool.js"></script>
+<script type="text/javascript" src="../js/Ajax.js"></script>
+<script type="text/javascript" src="../js/Data.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//getTypes();
+		var href = window.location.pathname;
+		var index = href.lastIndexOf("/");
+		var path = href.substr(index + 1);
+		if (path == "save") {
+			location.replace("document");
+		}
+		MoudleEngine_start();
+	});
+
+	function openwin(url) {
+		var myWindow = window.open('document/dataView?type=' + url, '', 'height=810,width=1220');
+	}
+</script>
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="headbox">
+				<div class="title">SDU-WH语句云交互验证分析平台</div>
+			</div>
+		</div>
+		<div id="body">
+			<div class="top">
+				<div class="title-body">
+					<p class="body-title">汉语句式云</p>
+					<p class="title-context">↓↓在这里输入您的文章，我们将为你评测分析</p>
+					<div class="search-menu">
+						<ul>
+							<li class="search-list"><a href="index">文库总览</a></li>
+							<li class="search-list"><a href="struct">句式管理</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="center">
+				<div class="search-box">
+					<ul id="doclist">
+						<li><a class="active" href="javascript:void(0)">文库概览</a></li>
+						<li><a href="javascript:void(0)">文库画图</a></li>
+						<li><a href="javascript:void(0)">欧式距离</a></li>
+						<li><a href="javascript:void(0)">余弦相似</a></li>
+					</ul>
+				</div>
+				<div id="bshow" class="show-box">
+					<div>
+						<div class="document-box" style="width:100%">
+							<div class="welcome-log">
+								<div class="slogan log-font">
+									<p>欢迎进入语句树交互平台，在这里您可以看到我们的文档库</p>
+								</div>
+								<div class="description">
+									<div class="summary">
+										<h3>简介</h3>
+										<p>
+											本平台是基于<a href="http://www.ltp-cloud.com">云计算技术的中文自然语言处理服务平台</a>服务的扩展服务平台，
+											它专门用于研究文章句式结构，对不同类的文章文档专门进行句式结构的数据挖掘。
+										</p>
+									</div>
+									<div class="start">
+										<h3>使用方法</h3>
+										<p>您可以在这里为你自己量身创建自己的文本库，也可以使用该平台默认文库，以下是默认文库的文章收录情况，新建文库请在这里输入：</p>
+										<div class="form-document form-inline">
+											<div class="form-group">
+												<input class="form-control" type="text" id="doctype"
+													placeholder="最后一个字必需是文" />
+											</div>
+											<div class="form-group">
+												<input class="btn btn-primary" onclick="createDir()"
+													type="button" value="新建文库" />
+											</div>
+											<div class="form-group">
+												<a class="btn btn-default" href="resporitory">进入管理</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="margin-top:40px;">
+								<table class="table table-hover" id="base_table">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>文档库类型</th>
+											<th>收录数目</th>
+											<th>今日录入数目</th>
+											<th>文档库操作</th>
+											<th>勾选</th>
+											<!-- <th align="center">最近修改</th> -->
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div style="display:none">
+						<a target="blank" title="放大查看" href="../pngs/叙事散文类_count__5cbdceb3-0eab-4f16-812d-74a236aa1e3b.png"><img alt="Responsive image" class="img-responsive" src="../pngs/叙事散文类_count__5cbdceb3-0eab-4f16-812d-74a236aa1e3b.png"/></a>
+						<a target="blank" title="放大查看" href="../pngs/叙事散文类_count__5cbdceb3-0eab-4f16-812d-74a236aa1e3b.png"><img alt="Responsive image" class="img-responsive" src="../pngs/叙事散文类_count__5cbdceb3-0eab-4f16-812d-74a236aa1e3b.png"/></a>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="footer-box"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

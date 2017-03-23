@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>山大--语句树平台</title>
+<link rel="stylesheet" type="text/css" href="../css/my.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/search.css" />
+<link rel="stylesheet" type="text/css" href="../css/document.css" />
+<link rel="stylesheet" type="text/css" href="../css/resporitory.css" />
+<script type="text/javascript" src="../js/dataTool.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/echarts.js"></script>
+<script type="text/javascript" src="../js/tool.js"></script>
+<script type="text/javascript" src="../js/Ajax.js"></script>
+<script type="text/javascript" src="../js/Data.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//getTypes();
+		var href = window.location.pathname;
+		var index = href.lastIndexOf("/");
+		var path = href.substr(index + 1);
+		if (path == "save") {
+			location.replace("document");
+		}
+		MoudleEngine_start();
+
+		$("#checkAll").click(function() {
+			if (this.checked) {
+				$("input[name=items]").prop("checked", true);
+			} else
+				$("input[name=items]").removeAttr("checked", false);
+		});
+	});
+
+	function openwin(url) {
+		var myWindow = window.open('document/dataView?type=' + url, '', 'height=810,width=1220');
+	}
+	;
+</script>
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="headbox">
+				<div class="title">SDU-WH语句云交互验证分析平台</div>
+			</div>
+		</div>
+		<div id="body">
+			<div class="top">
+				<div class="title-body">
+					<p class="body-title">文库管理</p>
+					<p class="title-context">↓↓请在这里录入您想要录入的文章</p>
+					<div class="search-menu">
+						<ul>
+							<li class="search-list"><a href="index">文库总览</a></li>
+							<li class="search-list"><a href="struct">句式管理</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="center">
+				<div class="search-box">
+					<ul id="doclist">
+						<li><a class="active" href="javascript:void(0)">本地文库</a></li>
+						<li><a href="javascript:void(0)">文档录入</a></li>
+						<li><a href="javascript:void(0)">文库查询</a></li>
+						<li><a href="javascript:void(0)">文库分析</a></li>
+					</ul>
+				</div>
+				<div id="bshow" class="show-box">
+					<div>
+						<div class="document-box" style="width:100%">
+							<div>
+								<form class="form-inline"
+									style="text-align:left;margin-left:20px;">
+									<div class="form-group">
+										<label>条件筛选：</label>&nbsp;&nbsp;
+										<div class="input-group">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-primary">类型</button>
+												<button type="button"
+													class="btn btn-primary dropdown-toggle"
+													data-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false">
+													<span class="caret"></span> <span class="sr-only">Toggle
+														Dropdown</span>
+												</button>
+												<ul id="bastype" class="dropdown-menu"
+													style="overflow-y:none;">
+												</ul>
+											</div>
+											<input type="text" class="form-control"
+												placeholder="key words" />
+										</div>
+										&nbsp;&nbsp;
+										<button type="submit" class="btn btn-primary">提交</button>
+										&nbsp;&nbsp;
+
+										<div class="btn-group">
+											<button type="button" class="btn btn-success">录入筛选</button>
+											<button type="button" class="btn btn-success dropdown-toggle"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">
+												<span class="caret"></span> <span class="sr-only">Toggle
+													Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" style="overflow-y:none;">
+												<li><a href="javascript:lookRecord()">筛选全部</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href="javascript:lookUnRecord()">未录筛选</a></li>
+												<li><a href="javascript:void(0)">正在录入</a></li>
+												<li><a href="javascript:void(0)">已录筛选</a></li>
+											</ul>
+										</div>
+										&nbsp;&nbsp;
+										<button type="button" onclick="loadin()"
+											class="btn btn-danger">全部录入</button>
+										<button type="button" onclick="deleteBase()" class="btn btn-danger">全部删除</button>
+									</div>
+									<div class="local_base">
+										<label>本地库共存储<span id="local" class="red">0</span>篇目标结果
+										</label> <br /> <label>当前页面共展示<span id="locnum" class="red">0</span>篇文档
+										</label>
+									</div>
+								</form>
+							</div>
+							<hr />
+							<div>
+								<table id="table_context" class="table table-hover">
+									<thead>
+										<th>序号</th>
+										<th>编号</th>
+										<th>类别</th>
+										<th>标题</th>
+										<th>内容</th>
+										<th>录入情况</th>
+										<th>来源</th>
+										<th><input type="checkbox" id="checkAll"
+											title="all in/out" /></th>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+								<p id="more" style="display:none"></p>
+							</div>
+						</div>
+					</div>
+					<div style="display:none;">
+						<div class="document-box">
+							<form id="doc" action="#" th:action="@{/trecloud/save}"
+								th:object="${document}" method="post">
+								<div class="form-document">
+									<input class="form-control" type="text" th:field="*{doc_title}"
+										placeholder="请输入标题" />
+								</div>
+								<div class="form-document">
+									<select class="form-control types" th:field="*{type}" name=""
+										placeholder="文档类型">
+									</select>
+								</div>
+
+								<div>
+									<textarea placeholder="请输入内容" class="form-control read"
+										th:field="*{context}" rows="16" cols="80">
+										</textarea>
+								</div>
+							</form>
+						</div>
+						<div class="document-btn">
+							<ul>
+								<li><input type="submit" class="btn btn-danger"
+									onclick="doc()" value="存入文库" /></li>
+							</ul>
+						</div>
+					</div>
+					<div style="display: none">
+						<div class="document-box">
+							<div class="document-table">
+								<div class="form-document">
+									<select class="form-control types" id="types" name=""
+										placeholder="文件类型" onchange="getType()">
+
+									</select>
+								</div>
+								<table class="table table-hover" id="doc_table"
+									style="overflow-y:auto;">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>文档名称</th>
+											<th>日期</th>
+											<th>文档类型</th>
+											<th width="80px">操作</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+								<div id="message"
+									style="color:red;font-size:20px;font-weight:bolder;display:none;">这个库里什么也没有</div>
+							</div>
+						</div>
+						<div class="document-btn">
+							<ul>
+								<li><input type="submit" class="btn btn-danger"
+									value="数据分析" /></li>
+								<li><input type="button" class="btn btn-danger"
+									value="条件筛选" /></li>
+							</ul>
+						</div>
+					</div>
+					<div style="display:none">
+						<div class="document-box">
+							<table class="table table-hover" id="sent_table"
+								style="overflow-y:auto;">
+								<thead>
+									<tr>
+										<th width="80px" align="center">编号</th>
+										<th align="center">例句</th>
+										<th align="center">主干结构</th>
+										<th width="80px" align="center">核心词汇</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+
+						<div class="document-btn">
+							<ul>
+								<li><input type="submit" class="btn btn-danger"
+									value="生成数据图" /></li>
+								<li><input type="button" class="btn btn-danger"
+									value="返回上一页" /></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="footer-box"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

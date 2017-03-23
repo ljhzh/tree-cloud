@@ -1,0 +1,27 @@
+#chartbox {
+	border:1px solid #e1e1e1;
+	background-color:lightgreen;
+}
+
+.title {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:2px;
+	width:98%;
+	min-height:40px;
+}
+
+.chart_title {
+	width:60%;
+	float:left;
+}
+
+.chart_btn {
+	margin-left:2%;
+	width:38%;
+	float:left;
+}
+
+.chartbox {
+	margin-top:2px;
+}

@@ -1,0 +1,159 @@
+.top {
+	width: 100%;
+	background: #0061C2;
+	height: 160px; 
+}
+
+.title-body {
+	margin: 0px auto;
+	width: 80%;
+	color:white;
+	padding-top: 40px;
+	position: relative;
+}
+
+.body-title {
+	font-size: 36px;
+}
+
+.title-context {
+	font-size: 20px;
+}
+
+.center {
+	overflow:hidden;
+	position:relative;
+	width: 100%;
+	background: #E8E8E8;
+	min-height: 600px;
+	height:auto;
+	padding-bottom:40px;
+}
+
+.center-box {
+	position: relative;
+	width: 80%;
+	margin: 0px auto;
+}
+
+.search-box {
+	float: left;
+	width: 20%;
+	height: auto;
+}
+
+.input-box {
+	padding-top: 20px;
+	padding-left: 0px;
+}
+
+.input-box textarea {
+	
+}
+
+.search-menu {
+	position: absolute;
+	border-left:solid 1px #e1e1e1;
+	top: 20px;
+	left: 70%;
+}
+
+.search-menu ul {
+	width: 300px;
+	height: 120px;
+	list-style: none;
+}
+
+.search-menu ul li {
+	width: 100px;
+	line-height: 40px;
+	text-align: center;
+	margin-left:10px;
+}
+
+.search-menu ul li a{
+	display: block;
+	background: #E8E8E8;
+	border-radius: 0.8em;
+	color: #0061C2;
+	font-size: 18px;
+	font-weight: bolder;
+	text-decoration: none;
+	margin-bottom:4px;
+}
+
+.btn-box {
+	padding: 10px;
+	line-height: 40px;
+}
+
+.btn-box button{
+	margin-left:20px; 
+}
+
+.show-box {
+	position: relative;
+	float: left;
+	width: 70%;
+	margin-top: 20px;
+	margin-left:40px;
+	padding: 20px;
+	height: auto;
+	border-radius: 1em;
+	background: white;
+	min-height: 405px;
+}
+
+.fubtn {
+	position: absolute;
+	bottom: -55px;
+	left:90%;
+}
+
+.show-title {
+	float: left;
+	font-weight: bolder;
+	font-size: 14px;
+	line-height: 30px;
+	max-width: 20%;
+	min-width: 100px;
+	color:#0061C2;
+}
+
+.show-inline {
+	margin-bottom:15px; 
+	width: 100%;
+	display: inline-block;
+	text-align: left;
+}
+
+.show-result {
+	float: left;
+	display: block;
+	height: 30px;
+	line-height:30px;
+	min-width:50%;
+	border-radius: 0.3em;
+	color:#D9534F;
+	font-weight:bolder;
+}
+
+.leftsent,.rightsent {
+	position: relative;
+	float: left;
+	width: 50%;
+	height: auto;
+}
+
+.show-none {
+	display:none;
+}
+
+.fullWidth {
+	width:100%;
+}
+
+/*.search-menu ul li a:hover {
+	background:#0061C2;
+	color:#E8E8E8;
+}*/
