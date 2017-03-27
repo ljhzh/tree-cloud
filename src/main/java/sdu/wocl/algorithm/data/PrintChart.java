@@ -36,7 +36,7 @@ public class PrintChart {
 	    num = r.getSv().getUnCountVector();
 	}
 	for(int i=1;i<num.length;i++) {
-	    dataset.addValue(num[i], r.getName(), "s"+i);
+	    dataset.addValue(num[i], "num", "s"+i);
 	}
 
 	JFreeChart chart=ChartFactory.createBarChart3D("", "句式结构", "数量", dataset, PlotOrientation.VERTICAL, true, true, true);
@@ -52,7 +52,7 @@ public class PrintChart {
 	numberaxis.setLabelFont(new Font("黑体", Font.PLAIN, 12));
 	chart.getLegend().setItemFont(new Font("宋体", Font.PLAIN, 12));
 	try {
-	    File file = new File(BaseConfig.getString("ltp.document.png.save")+title+"_"+id.toString()+".png");
+	    File file = new File(BaseConfig.getPath("ltp.document.png.save")+title+"_"+id.toString()+".png");
 	    ChartUtilities.saveChartAsPNG(file,chart,1600,500);//把报表保存为文件
 	    System.out.println("保存成功");
 	}catch (Exception e) {

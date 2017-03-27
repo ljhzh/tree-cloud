@@ -37,7 +37,7 @@ public class DocumentController {
     @RequestMapping(value="/document/dataView",method=RequestMethod.GET)
     @ResponseBody
     public List<XYPoint> getPoints(@RequestParam("type") String path) throws InstantiationException, IllegalAccessException {
-	return DataView.DocumentCollectorPath(path).getAdapter().
+	return DataView.DocumentManager(path,false).getAdapter().
 		setType(path).
 		showing().
 		getPointList();

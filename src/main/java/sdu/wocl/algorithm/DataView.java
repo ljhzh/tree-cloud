@@ -7,8 +7,6 @@ import java.util.List;
 
 import sdu.wocl.algorithm.data.ComputingData;
 import sdu.wocl.algorithm.data.PreparedData;
-import sdu.wocl.algorithm.view.DistancePoint;
-import sdu.wocl.algorithm.view.XYPoint;
 import sdu.wocl.dataFactory.entity.Sentence;
 import sdu.wocl.dataFactory.entity.SentenceContainer;
 import sdu.wocl.dataFactory.server.FilterServer;
@@ -35,9 +33,23 @@ public class DataView {
     public DataView() {
 	h.setComputing(computing);
     }
-    
+
     public HandleAdapter<PreparedData, ComputingData> getAdapter() {
 	return h;
+    }
+
+    //显示接口
+    public void show() {
+	h.showing();
+    }
+
+    //取名接口
+    public void setName(String name) {
+	computing.setName(name);
+    }
+
+    public List<String> getTitles() {
+	return titles;
     }
 
     public void init(String title) {
@@ -59,17 +71,16 @@ public class DataView {
 	    sc.clear();
 	}
     }
-
-    public void setName(String name) {
-	computing.setName(name);
-    }
-
-    public List<String> getTitles() {
-	return titles;
-    }
     
-    public static DataView DocumentCollectorPath(String path) {
+    public static DataView DocumentManager(String title) {
+	return DocumentManager(title,true);
+    }
+
+    public static DataView DocumentManager(String path,boolean isTitle) {
 	DataView dataView = new DataView();
+	if(isTitle) {
+	    return dataView.setTitle(path);
+	}
 	DocumentLocation dl = new DocumentLocationImpl();
 	List<String[]> documents = dl.LocationDocuments(path);
 	dataView.setName(path+"类");
@@ -80,18 +91,25 @@ public class DataView {
 	}
 	return dataView;
     }
-    
+
     public DataView DocumentCollectorTitle(String title) {
-	this.init(title);
+	init(title);
 	return this;
     }
-    
-    
-    
+
+    public DataView setTitle(String title) {
+	this.init(title);
+	this.setName(title);
+	return this;
+    }
+
+
+
     public static void main(String[] args) {
 	//DataView.DocumentCollectorPath("作文").getAdapter().showing();
 	//DataView.DocumentCollectorPath("写人作文").getAdapter().showing();
 	//DataView.DocumentCollectorPath("叙事作文").getAdapter().showing();
-	DataView.DocumentCollectorPath("日记").getAdapter().showing();
+	//DataView.DocumentCollectorPath("日记").getAdapter().showing();
+	DataView.DocumentManager("挣钱").show();
     }
 }

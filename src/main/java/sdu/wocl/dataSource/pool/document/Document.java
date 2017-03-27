@@ -36,10 +36,14 @@ public class Document {
      *
      */
     public interface DocumentLocation {
+	
+	//通过文档信息，定位文档存储位置
 	File Location(boolean sameDocument,String title,String type) throws FileExistException;
 	
+	//获取配置信息，获取文档存储路径
 	File LocationRoot() throws FileExistException;
 	
+	//根据类型，获取当前类型下的所有目录，即所有文章
 	List<String[]> LocationDocuments(String type);
     }
 

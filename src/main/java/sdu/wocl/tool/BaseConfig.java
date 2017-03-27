@@ -14,13 +14,16 @@ public class BaseConfig {
 	try {
 	    prop.load(in);
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
 
     public static String getString(String key) {
 	return prop.getProperty(key);
+    }
+    
+    public static String getPath(String key) {
+	return BaseConfig.class.getResource("/static/").getFile().toString()+prop.getProperty(key);
     }
 
 }
