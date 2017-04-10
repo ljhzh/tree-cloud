@@ -1,6 +1,5 @@
 package sdu.wocl.dataFactory.entity.wordtree;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,14 @@ public class WordTreeNode extends DoubleTreeNode<Word> {
 	this.pos = w.getPos().name();
     }
 
+    public String getPos() {
+	return pos;
+    }
+    
+    public String getRelate() {
+	return rel;
+    }
+    
     /**
      * 获取编号
      * @return

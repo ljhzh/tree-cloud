@@ -160,15 +160,9 @@ public class WordTree implements TreeImp<Word>,Serializable {
     }
 
     /**
-     * 转换成数据库相应操作
+     * 获取当前节点信息
      * @return
      */
-    public List<String> toSqlStatement() {
-	List<String> sqls  = new ArrayList<String>();
-	WordTreeMessage message = getMessage();
-	return sqls;
-    }
-
     public WordTreeMessage getMessage() {
 	return new WordTreeMessage(this);
     }
@@ -188,9 +182,11 @@ public class WordTree implements TreeImp<Word>,Serializable {
 	return messages;
     }
 
-
     @Override
     public void loadResult(DoubleTreeNode<Word> dtree) {
-
+	// TODO Auto-generated method stub
+	
     }
+
+
 }
