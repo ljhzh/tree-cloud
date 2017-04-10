@@ -102,14 +102,4 @@ public class DataView {
 	this.setName(title);
 	return this;
     }
-
-
-
-    public static void main(String[] args) {
-	//DataView.DocumentCollectorPath("作文").getAdapter().showing();
-	//DataView.DocumentCollectorPath("写人作文").getAdapter().showing();
-	//DataView.DocumentCollectorPath("叙事作文").getAdapter().showing();
-	//DataView.DocumentCollectorPath("日记").getAdapter().showing();
-	DataView.DocumentManager("挣钱").show();
-    }
 }
