@@ -8,6 +8,8 @@ import java.util.TreeMap;
 
 import sdu.wocl.algorithm.tool.UsualFinal;
 import sdu.wocl.algorithm.tool.UsualTool;
+import sdu.wocl.dataFactory.entity.Sentence;
+import sdu.wocl.dataFactory.entity.wordtree.WordTreeMessage;
 
 /**
  * 一篇文章对应一个model
@@ -21,31 +23,41 @@ public class Model {
 
     //最大矩阵秩
     int rank_max;
-
     //统计主干句式关系的个数
     int sumRel=0;
-    //依存数组，保存这个模式下常用的依存关系
+    //依存数组，保存这个模式下常用的依存关系,并统计
     Map<String,Integer> relsTeam = new TreeMap<String,Integer>();    
-
     //依存列
     int[] stygline;
-    
     //文档名
     String Name;
     
-    //词性列 三维
-    List<String[]> poss = new ArrayList<String[]>();
-    //数目列 二维
-    List<Integer[]> nums = new ArrayList<Integer[]>();
     //依存关系列矩阵 一维
     List<Integer[]> glines = new ArrayList<Integer[]>();
-    //依存关系列字符串
-    List<String> slines = new ArrayList<String>();
+    //数目列 二维
+    List<Integer[]> nums = new ArrayList<Integer[]>();
+    //词性列 三维
+    List<String[]> poss = new ArrayList<String[]>();
+    
+    
     List<String> styleLines = new ArrayList<String>();
     
     //没有记录下来的依存关系
     static List<String> unRecord = new ArrayList<String>();
 
+    public Model() {
+	
+    }
+    
+    public Model(List<Sentence> context,String title) {
+	this.setName(title);
+	List<WordTreeMessage> messages = UsualTool.getMessagesFromSentences(context);
+	for (WordTreeMessage wordTreeMessage : messages) {
+	    String[] rel=wordTreeMessage.getLeftSimpleStyle();
+	    this.instanceStyle(rel);
+	}
+    }
+    
     private void getOneInstanceTh(String[] pos) {
 	if(pos==null){
 	    return;
@@ -93,15 +105,14 @@ public class Model {
 		relsTeam.put("null", 1);
 	} else {
 	    rank_max=rank_max>str.length?rank_max:str.length;
-
 	    Integer[] gline = new Integer[str.length];
+	    
 	    for (int i=0;i<str.length;i++) {
 		if(i<=str.length-1) {
 		    String s = str[i];
 		    //总数+1
 		    sumRel++;
 		    try {
-			slines.add(s);
 			gline[i] = UsualFinal.getInteger(s);
 			//记录未记录的依存关系
 			if(gline[i]==-1 && !unRecord.contains(s)) {
@@ -125,7 +136,7 @@ public class Model {
     }
 
     /**
-     * 对Message的style进行提取特征
+     * 特征提取
      * @param style
      */
     public void instanceStyle(String[] style) {
@@ -192,14 +203,6 @@ public class Model {
     public Map<String,List<Struct>> queryStruct() {
 	StructSys sys = new StructSys();
 	return sys.examing(glines, rank_max);
-    }
-    
-    /**
-     * 获取句式列
-     * @return
-     */
-    public List<String> getSline() {
-	return slines;
     }
     
     public List<String> getStyleline() {

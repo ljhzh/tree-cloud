@@ -14,7 +14,7 @@ import sdu.wocl.dataFactory.entity.wordtree.tools.DataBaseCommand;
 
 /**
  * 数据库过滤器
- * 将数据库中零散的语料收集起来，与文档库共同构建成预料库
+ * 将数据库中零散的语料收集起来，与文档库共同构建成语料库
  * @author ljh_2015
  *
  */
@@ -131,7 +131,6 @@ public class FilterDatabaseServer {
      */
     private List<Sentence> querySentenceById(List<Integer> ids) {
 	System.out.println("query "+ids.size());
-
 	List<Sentence> sentences = new ArrayList<Sentence>();
 	for (Integer integer : ids) {
 	    List<Word> words = new ArrayList<Word>();

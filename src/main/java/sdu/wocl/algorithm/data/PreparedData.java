@@ -7,6 +7,7 @@ import java.util.Map;
 import sdu.wocl.algorithm.StyleVector;
 import sdu.wocl.algorithm.elements.Model;
 import sdu.wocl.algorithm.elements.Struct;
+import sdu.wocl.algorithm.tool.StyleMapps;
 
 /**
  * 数据预节点，用以提取源数据中需要的特征数据
@@ -21,7 +22,7 @@ public class PreparedData {
     //每个预处理Data都包含一个Model model=>一篇Document的信息
     private Model model;
     //string:数字,List<Struct>:这种句式有多少种
-    private Map<String,List<Struct>> sys = null;
+    private Map<String,List<Struct>> stable_struct = null;
     
     private StyleVector sv = new StyleVector();
     
@@ -39,12 +40,11 @@ public class PreparedData {
     
     public PreparedData setPreparedData(Model model) {
 	this.model = model;
-	this.sys = model.queryStruct();
+	this.stable_struct = model.queryStruct();
 	return this;
     }
 
     public void getPercentage() throws IllegalArgumentException, IllegalAccessException {
-	System.out.println("-----------正在进行依赖关系比例计算---------------");
 	Map<String,Integer> mapping = model.getRels();
 	int sum = 0;
 	for(String s:mapping.keySet()) {
@@ -62,10 +62,14 @@ public class PreparedData {
 	}
     }
     
-    public Map<String,Integer> getStyleSize() {
+    /**
+     * 求Model固定定式结构的分布情况
+     * @return
+     */
+    public Map<String,Integer> getStableStructSize() {
 	Map<String,Integer> map = new LinkedHashMap<String, Integer>();
-	for (String s : sys.keySet()) {
-	    map.put(s, sys.get(s).size());
+	for (String s : stable_struct.keySet()) {
+	    map.put(s, stable_struct.get(s).size());
 	}
 	return map;
     }

@@ -2,7 +2,7 @@ package sdu.wocl.algorithm.elements;
 
 import java.util.List;
 
-import sdu.wocl.algorithm.data.StyleMapps;
+import sdu.wocl.algorithm.tool.StyleMapps;
 import sdu.wocl.dataFactory.entity.Sentence;
 
 /**
@@ -18,20 +18,16 @@ public abstract class DocumentInstance extends DocumentBox {
      * 开启反馈机制
      */
     public void openFeedBack() {
+	
     }
 
 
     @Override
     public void processing() {
 	//数据预处理
-	preparedProcessing(super.getContexts());
+	preparedProcessing(getModel());
 	//数据计算
 	computingProcessing();
-
-//	if(feedback) {
-//	    feedback();
-//	    computingProcessing();
-//	}
     }
 
     protected void show() {
@@ -40,7 +36,7 @@ public abstract class DocumentInstance extends DocumentBox {
     }
 
     //预处理算法
-    protected abstract void preparedProcessing(List<Sentence> context);
+    protected abstract void preparedProcessing(Model model);
 
     //计算算法
     protected abstract void computingProcessing();

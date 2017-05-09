@@ -1,4 +1,4 @@
-package sdu.wocl.algorithm.data;
+package sdu.wocl.algorithm.tool;
 
 import java.awt.Font;
 import java.io.File;
@@ -14,6 +14,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import sdu.wocl.algorithm.data.ResultData;
 import sdu.wocl.tool.BaseConfig;
 
 /**

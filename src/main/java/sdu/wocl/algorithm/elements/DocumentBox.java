@@ -14,29 +14,16 @@ import sdu.wocl.dataFactory.entity.wordtree.WordTreeMessage;
 public abstract class DocumentBox {
 
 
-    //文档的语句列表
-    private List<Sentence> contexts;
+    //文档
+    private Model document;
 
-    private List<WordTreeMessage> sentMessages = new ArrayList<WordTreeMessage>();
 
-    public void setDocumentBox(List<Sentence> context) {
-	this.contexts = context;
-	if(context==null) {
-	    sentMessages = new ArrayList<WordTreeMessage>();
-	} else
-	    for (Sentence sentence : context) {
-		sentMessages.add(sentence.
-			WORDTREE.
-			getMessage());
-	    }
+    public void setDocumentBox(Model model) {
+	this.document = model;
     }
 
-    public List<Sentence> getContexts() {
-	return contexts;
-    }
-
-    public List<WordTreeMessage> getSentMessages() {
-	return sentMessages;
+    public Model getModel() {
+	return document;
     }
 
     public abstract void processing();

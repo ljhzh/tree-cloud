@@ -32,36 +32,52 @@ public class ComputingData {
 
     private List<ResultData> singleResultsCopy = new ArrayList<ResultData>();
 
-    //model队列
-    public Queue<PreparedData> models = new LinkedList<PreparedData>();
+    //PreparedData队列
+    public Queue<PreparedData> datas = new LinkedList<PreparedData>();
 
     public boolean mixualable = false;
 
     public void setName(String name) {
 	resultModel = new ResultData(name);
     }
+    
     /**
      * 接收一个model
      * @param model
      */
     public void receive(PreparedData model) {
-	models.offer(model);	
+	datas.offer(model);	
+    }
+    
+    /**
+     * 计算两篇文章的相似度
+     * @param model_s
+     * @param model_d
+     */
+    public ResultData compareModels(PreparedData model_s,PreparedData model_d) {
+	ResultData r_s = new ResultData();
+	r_s.setName(model_s.getName()+":"+model_d.getName()+" ");
+	r_s.setKey("compare");
+	r_s.setSysMap(model_s.getStableStructSize());
+	r_s.setSv(model_s.setSVector());
+	r_s.setAveMap(model_s.getMap());
+	
+	ResultData r_d = new ResultData();
+	r_d.setSysMap(model_d.getStableStructSize());
+	r_d.setSv(model_d.setSVector());
+	r_d.setAveMap(model_d.getMap());
+	
+	r_s.mixual(r_d);
+	return r_s;
     }
 
     //model接收处理器
     public void receiveAndProcedure(ResultData r) {
-	PreparedData model = models.poll();
+	PreparedData model = datas.poll();
 	Map<String,Double> map = model.getMap();
-	for(String s: map.keySet()) {
-	    if(r.getAveMap().containsKey(s)) {
-		double ave = (map.get(s)+r.getAveMap().get(s))/2;
-		r.getAveMap().put(s, ave);
-	    } else
-		r.getAveMap().put(s, map.get(s));
-	}
-
-	Map<String,Integer> sty = model.getStyleSize();
+	Map<String,Integer> sty = model.getStableStructSize();
 	//设置标号
+	r.setAveMap(map);
 	r.setName(model.getName());
 	r.setCode(singleResults.size());
 	r.setSysMap(sty);

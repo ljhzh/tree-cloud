@@ -23,12 +23,24 @@ public class LTPServer {
     private final static Logger logger = LoggerFactory.getLogger(LTPServer.class);
     private ConnectionPool connectionPool = new ConnectionPool();
 
+    /**
+     * 获取连接
+     * @return 返回从连接池中获取的连接
+     */
     public ConnectionAPI openAPI() {
 	return connectionPool.getConnection();
     }
 
     public ConnectionAPI openAPI(String format,String pattern) {
 	return connectionPool.getConnection(format,pattern);
+    }
+    
+    /**
+     * 释放连接
+     * @param api
+     */
+    public void closeConnection(ConnectionAPI api) {
+	api.openBusy();
     }
     
     /**
@@ -51,11 +63,8 @@ public class LTPServer {
 	}
 
 	ConnectionAPI getConnection() {
-	    int count=0;
 	    for (ConnectionAPI connectionAPI : pool) {
-		count++;
 		if(!connectionAPI.isbusy()) {
-		    logger.debug("第"+count+"个连接...");
 		    return connectionAPI;
 		}
 	    }
@@ -72,6 +81,8 @@ public class LTPServer {
 	    }
 	    return null;
 	}
+	
+	    
     }
 
     /**
@@ -81,7 +92,7 @@ public class LTPServer {
      */
     public class ConnectionAPI {
 	
-	private ThreadLocal<URLConnection> threadLocal = new ThreadLocal<URLConnection>();
+	private boolean isBusy = false;
 	private final String api_key="p8D9P0V1rsbV3aBKCudxIVwgpyjb8GjGFXKwHxsV";
 	private String pattern;
 	private String format;
@@ -114,8 +125,7 @@ public class LTPServer {
 
 	public synchronized InputStream AnalyzeGetResult(String text) throws IOException {       
 	    URLConnection conn=null;
-	    text = URLEncoder.
-		    encode(text, "utf-8");
+	    text = URLEncoder.encode(text, "utf-8");
 	    /**
 	     * 编码问题：最后字符为换行符的字符串
 	     * 解决策略：截掉%0D%0A之后的字符
@@ -125,9 +135,9 @@ public class LTPServer {
 		text=text.substring(0,index);
 	    }
 	    conn = getUrl(api_key,text,format,pattern);
-	    threadLocal.set(conn);
 	    conn.connect();
-	    logger.debug("连接成功");
+	    logger.debug(Thread.currentThread().getName()+" get stream from LTPServer");
+	    isBusy = true;
 	    return conn.getInputStream();
 	}
 
@@ -141,14 +151,17 @@ public class LTPServer {
 	    return connection;
 	}
 
+	public void openBusy() {
+	    logger.debug(Thread.currentThread().getName()+"release a connectionAPI");
+	    isBusy = false;
+	}
+	
 	/**
 	 * 判断连接是否处于忙碌状态
 	 * @return
 	 */
 	public boolean isbusy() {
-	    if(threadLocal.get()!=null)
-		return true;
-	    return false;
+	    return isBusy;
 	}
     }
 

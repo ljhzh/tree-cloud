@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import sdu.wocl.algorithm.StyleVector;
+import sdu.wocl.algorithm.tool.PrintChart;
 
 /**
  * 处理中间数据，得到需要展示出来的数据
@@ -17,6 +18,8 @@ public class ResultData {
 
     //标识
     private int code;
+    
+    private String key;
     
     private int docNum;
     //表示哪一类文档的模型
@@ -200,6 +203,14 @@ public class ResultData {
 
     public int getDocNum() {
         return docNum;
+    }
+
+    public String getKey() {
+	return key;
+    }
+
+    public void setKey(String key) {
+	this.key = key;
     }
 
 }

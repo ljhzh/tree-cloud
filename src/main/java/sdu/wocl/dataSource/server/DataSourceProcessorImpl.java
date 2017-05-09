@@ -28,9 +28,7 @@ public class DataSourceProcessorImpl {
     public List<InputStream> findDocumentBytitle(List<String> titles) throws IOException {
 	List<InputStream> result = new ArrayList<InputStream>();
 	for (String title : titles) {
-	    result.addAll(
-		    dataSource.
-		    TransOut(title));
+	    result.addAll(dataSource.TransOut(title));
 	}
 	return result;
     }

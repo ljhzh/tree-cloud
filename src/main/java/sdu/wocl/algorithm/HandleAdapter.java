@@ -21,7 +21,6 @@ public class HandleAdapter<P extends PreparedData,C extends ComputingData> exten
     private int count = 1;
     private String type;
     private List<String> titles = new ArrayList<String>();
-    private String currentTitle;
     
     //欧式距离矩阵
     private double[][] distances = null;
@@ -42,7 +41,6 @@ public class HandleAdapter<P extends PreparedData,C extends ComputingData> exten
     
     public void setTitle(String title) {
 	titles.add(title);
-	currentTitle = title;
     }
 
     public double[][] getDistances() {
@@ -70,17 +68,7 @@ public class HandleAdapter<P extends PreparedData,C extends ComputingData> exten
      * 预处理算法
      */
     @Override
-    protected void preparedProcessing(List<Sentence> context) {
-	if(context==null)
-	    return;
-	count++;
-	List<WordTreeMessage> messages = UsualTool.getMessagesFromSentences(context);
-	Model model = new Model();
-	for (WordTreeMessage wordTreeMessage : messages) {
-	    String[] rel=wordTreeMessage.getLeftSimpleStyle();
-	    model.setName(currentTitle);
-	    model.instanceStyle(rel);
-	}
+    protected void preparedProcessing(Model model) {
 	p.setPreparedData(model);
 	System.out.println("--------已经得到预处理数据--------");
     }
@@ -108,7 +96,7 @@ public class HandleAdapter<P extends PreparedData,C extends ComputingData> exten
      */
     @Override
     protected void resultProcessing() {
-	if(c.models.isEmpty()) {
+	if(c.datas.isEmpty()) {
 	    c.mixual();
 	    System.out.println("==============");
 	    distances = c.eachDistanceMixual();

@@ -7,6 +7,7 @@ import java.util.List;
 
 import sdu.wocl.algorithm.data.ComputingData;
 import sdu.wocl.algorithm.data.PreparedData;
+import sdu.wocl.algorithm.elements.Model;
 import sdu.wocl.dataFactory.entity.Sentence;
 import sdu.wocl.dataFactory.entity.SentenceContainer;
 import sdu.wocl.dataFactory.server.FilterServer;
@@ -62,14 +63,41 @@ public class DataView {
 	    e.printStackTrace();
 	}
 	if(titles.remove(title)) {
-	    SentenceContainer sc = filterServer.getContainer();
-	    List<Sentence> context = sc.getSentences();
+	    //获取模型
+	    Model model = createModel(title);
 	    h.setTitle(title);
-	    h.setDocumentBox(context);
+	    h.setDocumentBox(model);
 	    h.setDatas(new PreparedData());
 	    h.processing();
-	    sc.clear();
 	}
+    }
+    
+    /**
+     * 通过title标题获取Model模型，Model类是文档的数据模型
+     * @param title
+     * @return
+     */
+    private Model createModel(String title) {
+	List<String> documents = new ArrayList<String>();
+	documents.add(title);
+	List<InputStream> inputStreams = null;
+	try {
+	    inputStreams = dataSourceServer.processing().findDocumentBytitle(titles);
+	    filterServer.receive(inputStreams);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	if(title!=null) {
+	    SentenceContainer sc = filterServer.getContainer();
+	    List<Sentence> context = sc.getSentences();
+	    return new Model(context,title);
+	}
+	return null;
+    }
+    
+    public void CompareDocument(String title_f,String title_s) {
+	Model m_f = createModel(title_f);
+	Model m_s = createModel(title_s);
     }
     
     public static DataView DocumentManager(String title) {
